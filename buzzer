@@ -1,0 +1,23 @@
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+buzz = 12
+GPIO.setup(buzz, GPIO.OUT)
+
+freq = [740, 622, 622, 659, 554, 554, 494, 554, 622, 659, 740, 740, 740]
+
+def makeTone(freq):
+	scale = GPIO.PWM(buzz, freq)
+	scale.start(10)
+	time.sleep(0.5)
+	scale.stop()
+try:
+	for x in freq:
+		makeTone(x)
+	GPIO.cleanup()
+
+except KeyboardInterrupt:
+	GPIO.cleanup() 
